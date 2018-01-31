@@ -15,13 +15,6 @@ public:
 		initWith(std::forward<Args>(args)...);
 	}
 
-	LazyInit(std::function<const std::shared_ptr<T>()>& initFunc){
-		setIniter(initFunc);
-	}
-
-//	LazyInit(const LazyInit<T>&) = delete;
-//	LazyInit<T>& operator=(const LazyInit<T>&) = delete;
-
 	template<typename... Args>
 	void initWith(Args&&... args){
 		using FuncType = std::shared_ptr<T>(*)(Args...);
