@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <functional>
+#include <cassert>
 
 template<typename T>
 class LazyInit
@@ -17,9 +18,9 @@ public:
 
 	template<typename... Args>
 	void initWith(Args&&... args){
-		using FuncType = std::shared_ptr<T>(*)(Args...);
-		initFunc_ = std::bind((FuncType)std::make_shared<T>,
-							  std::forward<Args>(args)...);
+		initFunc_ = [args...]() -> std::shared_ptr<T>{
+					return std::make_shared<T>(args...);
+	};
 		isFuncInited_ = true;
 	}
 
@@ -28,6 +29,7 @@ public:
 	}
 
 	T getValue() const{
+		assert(isFuncInited_);
 		if(!lazyman_)
 			lazyman_ = initFunc_();
 		return *lazyman_;
