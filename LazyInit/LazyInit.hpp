@@ -35,8 +35,11 @@ public:
 		return *lazyman_;
 	}
 	
-	T& operator->() const{
-		return this->operator*();
+	std::shared_ptr<T> operator->() const{
+		assert(isFuncInited_);
+		if(!lazyman_)
+			lazyman_ = initFunc_();
+		return lazyman_;
 	}
 
 private:
