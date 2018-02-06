@@ -28,11 +28,15 @@ public:
 		initFunc_ = initFunc;
 	}
 
-	T getValue() const{
+	T operator*() const{
 		assert(isFuncInited_);
 		if(!lazyman_)
 			lazyman_ = initFunc_();
 		return *lazyman_;
+	}
+	
+	T& operator->() const{
+		return this->operator*();
 	}
 
 private:

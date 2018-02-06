@@ -33,7 +33,7 @@ int main()
 	LazyInit<WantLazy> lazyman(generateValue());
 
 	std::cout<<"Get value inside WantLazy class."<<std::endl;
-	auto lazy = lazyman.getValue();
+	auto lazy = *lazyman;
 	auto value = lazy.getValue();
 	std::cout<<"The value is:"<<value<<std::endl;
 }
